@@ -435,20 +435,18 @@ body .my-projects {
 }
 
 body .my-projects .my-projects__slider {
-  -webkit-box-shadow: 0px 6px 13px 8px rgba(0, 0, 0, 0.5);
-          box-shadow: 0px 6px 13px 8px rgba(0, 0, 0, 0.5);
   margin: 0 auto;
   width: 80%;
-  min-width: 200px;
+}
+
+body .my-projects .my-projects__slider:hover .elem-description {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
   body .my-projects .my-projects__slider {
     width: 90%;
     font-size: 10px;
-  }
-  body .my-projects .my-projects__slider:hover .elem-description {
-    opacity: 1;
   }
 }
 
@@ -463,8 +461,8 @@ body .my-projects .my-projects__slider .elem-description {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  bottom: 0;
-  opacity: 1;
+  bottom: 3px;
+  opacity: 0;
   color: white;
   -webkit-transition: 0.3s all;
   transition: 0.3s all;
@@ -472,14 +470,13 @@ body .my-projects .my-projects__slider .elem-description {
 
 @media (max-width: 768px) {
   body .my-projects .my-projects__slider .elem-description {
-    opacity: 0;
     height: 100%;
     padding: 1rem 2rem;
   }
 }
 
 body .my-projects .my-projects__slider .elem-description article {
-  width: 15%;
+  width: 10%;
 }
 
 @media (max-width: 768px) {
@@ -510,19 +507,6 @@ body .my-projects .my-projects__slider .elem-description i:hover {
   body .my-projects {
     margin: 1rem;
   }
-}
-
-body .my-projects .my-projects__slide {
-  margin: 0 auto;
-  position: relative;
-}
-
-body .my-projects .my-projects__slide img {
-  width: 100%;
-}
-
-body .my-projects .my-projects__slide .my-projects__slide-desc {
-  position: absolute;
 }
 
 body .my-projects .my-projects__header-tag {

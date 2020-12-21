@@ -40,7 +40,7 @@ const links = document.querySelectorAll(".nav-menu__link");
 $(document).ready(function () {
   $(".my-projects__slider").slick({
     arrows: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 10000,
     mobileFirst: true,
     dots: true,
