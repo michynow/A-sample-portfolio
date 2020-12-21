@@ -1,0 +1,26 @@
+{
+  "name": "portfolio-asap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "jquery": "^3.5.1",
+    "lightbox2": "^2.11.3",
+    "wow.js": "^1.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michynow/A-sample-portfolio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michynow/A-sample-portfolio/issues"
+  },
+  "homepage": "https://github.com/michynow/A-sample-portfolio#readme"
+}

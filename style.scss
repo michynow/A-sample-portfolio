@@ -1,18 +1,14 @@
-$mobile-font: 12px;
-$tablet-font: 14px;
-$regular-font: 16px;
-$big-font: 26px;
-$screen-XS: 360px;
-$screen-tablet: 768px;
-$screen-rest: 1366px;
-$primary-color: #b5b4dc;
-$font-color: whitesmoke;
-$secondary-color: #083d77;
-$accent-color: #5603ad;
+@import "./_variables.scss";
 @mixin displayFlex($flex-direction, $justify-content) {
   display: flex;
   flex-direction: $flex-direction;
   justify-content: $justify-content;
+}
+* {
+  scroll-behavior: smooth;
+}
+.mobile-wrapper {
+  overflow-x: hidden;
 }
 body {
   //general settings
@@ -34,25 +30,84 @@ body {
   .nav-menu__container {
     @include displayFlex(row, space-between);
     width: 100%;
+    @media (max-width: $screen-tablet) {
+      background-color: $secondary-color;
+    }
+
     .nav-menu__logo-container {
       padding: 0.3rem;
-      margin-left: 2%;
+      margin-left: 1rem;
       opacity: 0.75;
+      @media (max-width: $screen-tablet) {
+        transform: scale(0.75);
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
     }
     .nav-menu__links {
       @include displayFlex(row, space-around);
       list-style-type: none;
       align-self: flex-end;
-      margin-right: 5%;
+      margin-right: 2.5rem;
       @media (max-width: $screen-tablet) {
-        display: none;
+        transition: all 0.5s;
+        width: 100%;
+        margin-left: -1000px;
+        opacity: 0;
+        flex-direction: column;
+        justify-content: space-between;
+        position: absolute;
+        top: 6.5%;
+        z-index: 100;
+        left: 0;
+        text-align: center;
+        padding: 0;
+        box-shadow: 0px 8px 6px 2px rgba(0, 0, 0, 0.25);
       }
       .nav-menu__link {
         padding: 0 1rem;
-        a {
-          text-decoration: none;
-          color: $font-color;
-          font-weight: bold;
+        position: relative;
+        @media (max-width: $screen-tablet) {
+          background-color: white;
+          color: $secondary-color;
+          padding: 0.5rem;
+          &:hover {
+            background-color: whitesmoke;
+          }
+        }
+      }
+      a {
+        text-decoration: none;
+        padding: 0.2rem;
+        color: $font-color;
+        font-weight: bold;
+        transition: 0.3s all;
+        position: relative;
+        &:hover {
+          color: cornsilk;
+          &::before {
+            transform: scaleX(75);
+            visibility: visible;
+          }
+        }
+        &::before {
+          visibility: hidden;
+          width: 1px;
+          height: 2px;
+          background-color: $accent-color;
+          position: absolute;
+          bottom: 0;
+          left: calc(50% + 10px);
+          content: "";
+          transition: 0.3s all;
+        }
+        @media (max-width: $screen-tablet) {
+          padding: 0.5rem 40%;
+          color: $secondary-color;
+          &:hover {
+            color: $accent-color;
+          }
         }
       }
     }
@@ -65,71 +120,75 @@ body {
     }
     .nav-menu__hamburger-container {
       display: none;
-      margin: 2rem 3rem;
-      .toggle .bar1 {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-      .toggle .nav-menu__hamburger::before {
-        transform: rotate(45deg);
-      }
-      .toggle .nav-menu__hamburger::after {
-        transform: rotate(-45deg);
-      }
+      margin: 1rem;
       .nav-menu__hamburger {
         position: relative;
+        .toggle {
+          @include hamburgerBarStyling(absolute);
+          transition: 0.3s all;
+          transform: translateY(9px);
+          width: 0;
+          &::before {
+            content: " ";
+            transition: 0.5s all ease-out;
+            @include hamburgerBarStyling(absolute);
+            transform: rotate(45deg);
+          }
+          &::after {
+            content: " ";
+            transform: rotate(-45deg);
+            transition: 0.5s all ease-out;
+            @include hamburgerBarStyling(absolute);
+          }
+        }
         .bar1 {
           @include hamburgerBarStyling(absolute);
           transition: 0.3s all;
-        }
-
-        &::before {
-          content: " ";
-          transition: 0.5s transform;
-          @include hamburgerBarStyling(absolute);
-          transform: translateY(9px);
-        }
-        &::after {
-          content: " ";
-          transition: 0.5s transform;
-          @include hamburgerBarStyling(absolute);
-          transform: translateY(-9px);
+          &::before {
+            content: " ";
+            transition: 0.5s all ease-out;
+            @include hamburgerBarStyling(absolute);
+            transform: translateY(18px);
+          }
+          &::after {
+            content: " ";
+            transform: translateY(9px);
+            transition: 0.5s all ease-out;
+            @include hamburgerBarStyling(absolute);
+          }
         }
       }
       @media (max-width: $screen-tablet) {
         display: block;
         cursor: pointer;
-        height: 30px;
         width: 30px;
       }
     }
   }
   //intro sect
   .intro-section__container {
-    margin: 0 5%;
+    margin: 0 3rem;
     @include displayFlex(row, space-between);
     @media (max-width: $screen-tablet) {
       flex-direction: column;
+      margin: 0 1rem;
     }
     .intro-section__welcome-text {
       align-self: center;
-      overflow: visible;
       white-space: none;
       @media (max-width: $screen-tablet) {
         text-align: center;
-        padding-top: 10%;
-        margin: 0;
       }
       .intro-section__heading {
         font-size: $big-font;
       }
     }
     .intro-section__btn {
-      border: none;
+      border: 1px solid $secondary-color;
+      z-index: 10;
       padding: 0.8rem;
       border-radius: 15px;
       background-color: $secondary-color;
-      color: $font-color;
       font-weight: bold;
       cursor: pointer;
       margin-top: 2rem;
@@ -138,6 +197,18 @@ body {
       z-index: 2;
       letter-spacing: 1px;
       opacity: 0.8;
+      a {
+        text-decoration: none;
+        color: $font-color;
+        transition: 0.3s all;
+      }
+      &:hover {
+        background-color: whitesmoke;
+        border: 1px solid $secondary-color;
+        a {
+          color: $secondary-color;
+        }
+      }
       i {
         vertical-align: middle;
       }
@@ -145,12 +216,13 @@ body {
     .intro-section__hero-img-container {
       img {
         width: 100%;
-        min-height: 90vh;
         @media (max-width: $screen-tablet) {
-          min-height: auto;
           transform: scale(0.9);
         }
       }
+    }
+    @media (max-width: 1100px) {
+      margin-bottom: 7rem;
     }
   }
 
@@ -174,7 +246,10 @@ body {
   }
   //offer section
   .offer-section {
-    margin: 5% 5%;
+    margin: 3rem;
+    @media (max-width: $screen-tablet) {
+      margin: 1rem;
+    }
     .offer-container {
       .offer-section__header-tag {
         color: $accent-color;
@@ -211,7 +286,73 @@ body {
   }
   //My projects section with slider
   .my-projects {
-    margin: 5%;
+    margin: 4rem;
+    .my-projects__slider {
+      box-shadow: 0px 6px 13px 8px rgba(0, 0, 0, 0.5);
+      margin: 0 auto;
+      width: 80%;
+      min-width: 200px;
+      @media (max-width: $screen-tablet) {
+        width: 90%;
+        font-size: 10px;
+
+        &:hover .elem-description {
+          opacity: 1;
+        }
+      }
+      .my-projects__slider-elem img {
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+      }
+      .elem-description {
+        padding: 1rem 3rem;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        bottom: 0;
+        opacity: 1;
+        color: white;
+        transition: 0.3s all;
+        @media (max-width: $screen-tablet) {
+          opacity: 0;
+          height: 100%;
+          padding: 1rem 2rem;
+        }
+        article {
+          width: 15%;
+          @media (max-width: $screen-tablet) {
+            margin: 1rem 0;
+            position: absolute;
+            bottom: 0;
+          }
+        }
+        i {
+          color: white;
+          font-size: $big-font;
+          padding-right: 0.5rem;
+          &:hover {
+            color: lightgray;
+          }
+          @media (max-width: $screen-tablet) {
+            font-size: $regular-font;
+          }
+        }
+      }
+    }
+    @media (max-width: $screen-tablet) {
+      margin: 1rem;
+    }
+    .my-projects__slide {
+      margin: 0 auto;
+      position: relative;
+      img {
+        width: 100%;
+      }
+      .my-projects__slide-desc {
+        position: absolute;
+      }
+    }
     .my-projects__header-tag {
       color: $accent-color;
       font-weight: bolder;
@@ -220,17 +361,23 @@ body {
         @include blobStyle(-130px, -160px, url(./image/blob4.svg));
       }
     }
+    .my-projects__heading {
+      margin-bottom: 5rem;
+    }
   }
   //about me section
   .about-me {
-    margin: 0 5%;
+    margin: 0 3rem;
+    @media (max-width: $screen-tablet) {
+      margin: 1rem;
+    }
     .about-me__header-tag {
       color: $accent-color;
       font-weight: bolder;
       text-align: right;
       position: relative;
       @media (max-width: $screen-tablet) {
-        width: 10%;
+        width: 20%;
         margin-left: 80%;
       }
       &::before {
@@ -247,7 +394,10 @@ body {
     }
     .about-me__container {
       @include displayFlex(row, space-between);
-      margin-right: 5%;
+      margin-right: 5rem;
+      @media (max-width: $screen-tablet) {
+        margin: 1rem;
+      }
       @media (max-width: $screen-tablet) {
         flex-direction: column-reverse;
         text-align: center;
@@ -258,16 +408,12 @@ body {
           box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
           border: 1px solid black;
           filter: saturate(200%);
-          height: 75%;
-          width: 125%;
+          width: 100%;
           border-radius: 15px;
           @media (max-width: $screen-rest) {
-            margin-left: 10%;
-            height: 60%;
             width: 100%;
           }
           @media (max-width: $screen-tablet) {
-            height: 50%;
             width: 50%;
             border-radius: 50%;
           }
@@ -275,9 +421,10 @@ body {
       }
       .about-me__text-techs {
         width: 60%;
-        padding-top: 5%;
+        padding-top: 4rem;
         @media (max-width: $screen-tablet) {
           width: 100%;
+          padding-top: 1rem;
         }
         p {
           padding: 0.5rem 0;
@@ -296,14 +443,12 @@ body {
             img {
               padding: 0.4rem;
               width: 64px;
-              height: 64px;
+
               @media (max-width: $screen-rest) {
                 width: 48px;
-                height: 48px;
               }
               @media (max-width: $screen-tablet) {
                 width: 32px;
-                height: 32px;
               }
             }
           }
@@ -313,14 +458,17 @@ body {
   }
   //contact section
   .contact {
-    margin: 5% 5%;
+    margin: 3rem;
+    @media (max-width: $screen-tablet) {
+      margin: 1rem;
+    }
     .contact-container {
       @include displayFlex(row, space-between);
       @media (max-width: $screen-tablet) {
         flex-direction: column;
       }
       .contact__text {
-        width: 50%;
+        width: 40%;
         @media (max-width: $screen-tablet) {
           width: 100%;
         }
@@ -338,10 +486,14 @@ body {
         .contact__social-media-bar {
           @include displayFlex(row, space-around);
           width: 30%;
-          padding: 5% 0;
+          padding: 2rem 0;
           i {
             transform: scale(2);
             color: $secondary-color;
+            transition: 0.3s all;
+            &:hover {
+              color: $accent-color;
+            }
           }
         }
       }
@@ -352,10 +504,10 @@ body {
       .contant-form {
         background-color: $secondary-color;
         padding: 2rem;
-        width: 30%;
+        width: 40%;
         box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
         @media (max-width: $screen-tablet) {
-          width: 75%;
+          width: 70%;
           margin: 0 auto;
         }
         form {
@@ -381,15 +533,31 @@ body {
             color: $font-color;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.3s all;
+            &:hover {
+              filter: brightness(1.25);
+            }
           }
         }
       }
     }
   }
-  footer {
+  .main-footer {
     background-color: $secondary-color;
     width: 100%;
     text-align: center;
     padding: 0.5rem;
+    a {
+      text-decoration: none;
+      color: white;
+      transition: 0.3s all;
+      &:hover {
+        color: dodgerblue;
+      }
+    }
+    span {
+      color: red;
+      font-weight: bolder;
+    }
   }
 }
