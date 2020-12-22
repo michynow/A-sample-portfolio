@@ -411,6 +411,10 @@ body .content-container .intro-section__container .intro-section__btn i {
   vertical-align: middle;
 }
 
+body .content-container .intro-section__container .intro-section__hero-img-container {
+  overflow-x: hidden;
+}
+
 body .content-container .intro-section__container .intro-section__hero-img-container::after {
   background-image: url("./image/background.svg");
   background-repeat: no-repeat;

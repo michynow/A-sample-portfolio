@@ -260,6 +260,7 @@ body {
         }
       }
       .intro-section__hero-img-container {
+        overflow-x: hidden;
         &::after {
           background-image: url("./image/background.svg");
           background-repeat: no-repeat;
