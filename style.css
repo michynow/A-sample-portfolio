@@ -14,6 +14,7 @@ body {
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  overflow-x: hidden;
   background-color: #b5b4dc;
 }
 
@@ -412,8 +413,6 @@ body .content-container .intro-section__container .intro-section__hero-img-conta
   left: 85%;
   width: 100%;
   height: 100%;
-  -webkit-transform: scale(1);
-          transform: scale(1);
 }
 
 @media (max-width: 1200px) {
