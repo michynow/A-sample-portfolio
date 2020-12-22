@@ -349,9 +349,17 @@ body .content-container .intro-section__container .intro-section__welcome-text::
 
 @media (max-width: 768px) {
   body .content-container .intro-section__container .intro-section__welcome-text::after {
-    left: -15%;
+    left: -25%;
     -webkit-transform: scale(1.2);
             transform: scale(1.2);
+  }
+}
+
+@media (max-width: 468px) {
+  body .content-container .intro-section__container .intro-section__welcome-text::after {
+    left: -40%;
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
@@ -531,7 +539,7 @@ body .content-container .my-projects {
 
 body .content-container .my-projects .my-projects__slider {
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
 }
 
 body .content-container .my-projects .my-projects__slider:hover .elem-description {
@@ -604,7 +612,7 @@ body .content-container .my-projects .my-projects__header-tag {
 }
 
 body .content-container .my-projects .my-projects__header-tag::before {
-  background-image: url(./image/blob4.svg);
+  background-image: url("./image/blob4.svg");
   background-repeat: no-repeat;
   position: absolute;
   height: 400px;
