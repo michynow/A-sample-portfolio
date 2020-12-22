@@ -19,7 +19,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: $primary-color;
-  overflow-x: hidden;
   @media (max-width: $screen-rest) {
     font-size: $tablet-font;
   }
@@ -29,9 +28,11 @@ body {
   //navigation
   .nav-menu__container {
     @include displayFlex(row, space-between);
-    width: 100%;
+
     @media (max-width: $screen-tablet) {
       background-color: $secondary-color;
+      height: 50px;
+      position: relative;
     }
 
     .nav-menu__logo-container {
@@ -42,10 +43,10 @@ body {
         transform: scale(0.75);
         margin: 0;
         padding: 0;
-        position: relative;
       }
     }
-    .nav-menu__links {
+    .nav-menu__links,
+    .nav-menu__links--open {
       @include displayFlex(row, space-around);
       list-style-type: none;
       align-self: flex-end;
@@ -53,18 +54,31 @@ body {
       @media (max-width: $screen-tablet) {
         transition: all 0.5s;
         width: 100%;
-        margin-left: -1000px;
-        opacity: 0;
         flex-direction: column;
         justify-content: space-between;
         position: absolute;
-        top: 6.5%;
+        top: 37.5px;
         z-index: 100;
         left: 0;
         text-align: center;
         padding: 0;
         box-shadow: 0px 8px 6px 2px rgba(0, 0, 0, 0.25);
       }
+    }
+    .nav-menu__links--open {
+      @media (max-width: $screen-tablet) {
+        opacity: 1;
+        margin-left: 0px;
+      }
+    }
+    .nav-menu__links {
+      @media (max-width: $screen-tablet) {
+        margin-left: -1000px;
+        opacity: 0;
+      }
+    }
+    .nav-menu__links--open,
+    .nav-menu__links {
       .nav-menu__link {
         padding: 0 1rem;
         position: relative;
@@ -83,27 +97,23 @@ body {
         color: $font-color;
         font-weight: bold;
         transition: 0.3s all;
-        position: relative;
+        display: inline-block;
         &:hover {
           color: cornsilk;
-          &::before {
-            transform: scaleX(75);
-            visibility: visible;
+          &::after {
+            transform: scaleX(1);
           }
         }
-        &::before {
-          visibility: hidden;
-          width: 1px;
-          height: 2px;
-          background-color: $accent-color;
-          position: absolute;
-          bottom: 0;
-          left: calc(50% + 10px);
+        &::after {
+          border-bottom: solid 3px $secondary-color;
+          transition: transform 250ms ease-in-out;
+          transform-origin: 100% 50%;
+          display: block;
           content: "";
-          transition: 0.3s all;
+          transform: scaleX(0);
         }
         @media (max-width: $screen-tablet) {
-          padding: 0.5rem 40%;
+          padding: 0.5rem 45%;
           color: $secondary-color;
           &:hover {
             color: $accent-color;
@@ -123,7 +133,7 @@ body {
       margin: 1rem;
       .nav-menu__hamburger {
         position: relative;
-        .toggle {
+        .nav-menu--open {
           @include hamburgerBarStyling(absolute);
           transition: 0.3s all;
           transform: translateY(9px);
@@ -141,7 +151,7 @@ body {
             @include hamburgerBarStyling(absolute);
           }
         }
-        .bar1 {
+        .hamburger-bar1 {
           @include hamburgerBarStyling(absolute);
           transition: 0.3s all;
           &::before {
@@ -166,363 +176,410 @@ body {
     }
   }
   //intro sect
-  .intro-section__container {
-    margin: 0 3rem;
-    @include displayFlex(row, space-between);
+  .content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 95%;
     @media (max-width: $screen-tablet) {
-      flex-direction: column;
-      margin: 0 1rem;
+      width: 95%;
     }
-    .intro-section__welcome-text {
-      align-self: center;
-      white-space: none;
-      @media (max-width: $screen-tablet) {
-        text-align: center;
-      }
-      .intro-section__heading {
-        font-size: $big-font;
-      }
-    }
-    .intro-section__btn {
-      border: 1px solid $secondary-color;
-      z-index: 10;
-      padding: 0.8rem;
-      border-radius: 15px;
-      background-color: $secondary-color;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 2rem;
-      transition: 0.5s all;
-      position: relative;
-      z-index: 2;
-      letter-spacing: 1px;
-      opacity: 0.8;
-      a {
-        text-decoration: none;
-        color: $font-color;
-        transition: 0.3s all;
-      }
-      &:hover {
-        background-color: whitesmoke;
-        border: 1px solid $secondary-color;
-        a {
-          color: $secondary-color;
-        }
-      }
-      i {
-        vertical-align: middle;
-      }
-    }
-    .intro-section__hero-img-container {
-      img {
-        width: 100%;
-        @media (max-width: $screen-tablet) {
-          transform: scale(0.9);
-        }
-      }
-    }
-    @media (max-width: 1100px) {
-      margin-bottom: 7rem;
-    }
-  }
-
-  @mixin blobStyle($top, $left, $blob-img) {
-    background-image: $blob-img;
-    background-repeat: no-repeat;
-    position: absolute;
-    height: 400px;
-    width: 400px;
-    opacity: 0.3;
-    z-index: -1;
-    content: " ";
-    top: $top;
-    left: $left;
-    @media (max-width: $screen-rest) {
-      transform: scale(0.75);
-    }
-    @media (max-width: $screen-tablet) {
-      transform: scale(0.6);
-    }
-  }
-  //offer section
-  .offer-section {
-    margin: 3rem;
-    @media (max-width: $screen-tablet) {
-      margin: 1rem;
-    }
-    .offer-container {
-      .offer-section__header-tag {
-        color: $accent-color;
-        font-weight: bolder;
-      }
-      .offer-section__heading {
-        font-size: $big-font;
-        position: relative;
-        padding-bottom: 1rem;
-        &::before {
-          @include blobStyle(-200px, -100px, url("./image/blob1.svg"));
-        }
-      }
-    }
-    .offer-container__grid-container {
-      margin-top: 2rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 3rem;
-      @media (max-width: $screen-tablet) {
-        grid-template-columns: 1fr;
-      }
-      .offer-container__grid-item {
-        text-align: center;
-        .offer-container__grid-item-heading {
-          color: $accent-color;
-        }
-        .grid-item-svg {
-          max-width: 60px;
-          color: $accent-color;
-        }
-      }
-    }
-  }
-  //My projects section with slider
-  .my-projects {
-    margin: 4rem;
-    .my-projects__slider {
-      margin: 0 auto;
-      width: 80%;
-
-      &:hover .elem-description {
-        opacity: 1;
-      }
-      @media (max-width: $screen-tablet) {
-        width: 90%;
-        font-size: 10px;
-      }
-      .my-projects__slider-elem img {
-        margin: 0 auto;
-        position: relative;
-        width: 100%;
-      }
-      .elem-description {
-        padding: 1rem 3rem;
-        position: absolute;
-        background-color: rgba(0, 0, 0, 0.5);
-        width: 100%;
-        bottom: 3px;
-        opacity: 0;
-        color: white;
-        transition: 0.3s all;
-        @media (max-width: $screen-tablet) {
-          height: 100%;
-          padding: 1rem 2rem;
-        }
-        article {
-          width: 10%;
-          @media (max-width: $screen-tablet) {
-            margin: 1rem 0;
-            position: absolute;
-            bottom: 0;
-          }
-        }
-        i {
-          color: white;
-          font-size: $big-font;
-          padding-right: 0.5rem;
-          &:hover {
-            color: lightgray;
-          }
-          @media (max-width: $screen-tablet) {
-            font-size: $regular-font;
-          }
-        }
-      }
-    }
-    @media (max-width: $screen-tablet) {
-      margin: 1rem;
-    }
-    .my-projects__header-tag {
-      color: $accent-color;
-      font-weight: bolder;
-      position: relative;
-      &::before {
-        @include blobStyle(-130px, -160px, url(./image/blob4.svg));
-      }
-    }
-    .my-projects__heading {
-      margin-bottom: 5rem;
-    }
-  }
-  //about me section
-  .about-me {
-    margin: 0 3rem;
-    @media (max-width: $screen-tablet) {
-      margin: 1rem;
-    }
-    .about-me__header-tag {
-      color: $accent-color;
-      font-weight: bolder;
-      text-align: right;
-      position: relative;
-      @media (max-width: $screen-tablet) {
-        width: 20%;
-        margin-left: 80%;
-      }
-      &::before {
-        @include blobStyle(-150px, 0px, url("./image/blob.svg"));
-        @media (max-width: $screen-tablet) {
-          left: -150px;
-        }
-      }
-    }
-    .about-me__heading {
-      text-align: right;
-      margin-bottom: 2rem;
-      width: 100%;
-    }
-    .about-me__container {
-      @include displayFlex(row, space-between);
-      margin-right: 5rem;
-      @media (max-width: $screen-tablet) {
-        margin: 1rem;
-      }
-      @media (max-width: $screen-tablet) {
-        flex-direction: column-reverse;
-        text-align: center;
-      }
-      .about-me__header-img {
-        order: 2;
-        .about-me__img img {
-          box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
-          border: 1px solid black;
-          filter: saturate(200%);
-          width: 100%;
-          border-radius: 15px;
-          @media (max-width: $screen-rest) {
-            width: 100%;
-          }
-          @media (max-width: $screen-tablet) {
-            width: 50%;
-            border-radius: 50%;
-          }
-        }
-      }
-      .about-me__text-techs {
-        width: 60%;
-        padding-top: 4rem;
-        @media (max-width: $screen-tablet) {
-          width: 100%;
-          padding-top: 1rem;
-        }
-        p {
-          padding: 0.5rem 0;
-        }
-        .tech-container {
-          .tech-container__heading {
-            color: $accent-color;
-            font-weight: bold;
-          }
-          .tech-icons-container {
-            margin-top: 2rem;
-            @include displayFlex(row, flex-start);
-            @media (max-width: $screen-tablet) {
-              justify-content: center;
-            }
-            img {
-              padding: 0.4rem;
-              width: 64px;
-
-              @media (max-width: $screen-rest) {
-                width: 48px;
-              }
-              @media (max-width: $screen-tablet) {
-                width: 32px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  //contact section
-  .contact {
-    margin: 3rem;
-    @media (max-width: $screen-tablet) {
-      margin: 1rem;
-    }
-    .contact-container {
+    .intro-section__container {
+      // height: 90vh;
       @include displayFlex(row, space-between);
       @media (max-width: $screen-tablet) {
         flex-direction: column;
       }
-      .contact__text {
-        width: 40%;
-        @media (max-width: $screen-tablet) {
+      .intro-section__welcome-text {
+        align-self: center;
+        white-space: none;
+        position: relative;
+
+        &::after {
+          background-image: url("./image/background1.svg");
+          background-repeat: no-repeat;
+          background-size: contain;
+          opacity: 0.4;
+          position: absolute;
+          content: " ";
+          top: -30%;
+          left: -50%;
+          z-index: -5;
           width: 100%;
+          height: 100%;
+          transform: scale(2);
+          @media (max-width: 1200px) {
+            top: 0%;
+            transform: scale(1.5);
+          }
+          @media (max-width: 768px) {
+            left: -15%;
+            transform: scale(1.2);
+          }
         }
-        .contact__header-tag {
+
+        @media (max-width: $screen-tablet) {
+          text-align: center;
+        }
+        .intro-section__heading {
+          font-size: $big-font;
+        }
+      }
+      .intro-section__btn {
+        border: 1px solid $secondary-color;
+        z-index: 10;
+        border-radius: 15px;
+        padding: 0.8rem;
+        background-color: $secondary-color;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 2rem;
+        transition: 0.5s all;
+        position: relative;
+        z-index: 2;
+        letter-spacing: 1px;
+        a {
+          text-decoration: none;
+          padding: 0.8rem;
+          color: $font-color;
+          transition: 0.3s all;
+        }
+        &:hover {
+          background-color: whitesmoke;
+          border: 1px solid $secondary-color;
+          a {
+            color: $secondary-color;
+          }
+        }
+        i {
+          vertical-align: middle;
+        }
+      }
+      .intro-section__hero-img-container {
+        &::after {
+          background-image: url("./image/background.svg");
+          background-repeat: no-repeat;
+          background-size: contain;
+          opacity: 0.4;
+          position: absolute;
+          content: " ";
+          bottom: -20%;
+          left: 85%;
+          width: 100%;
+          height: 100%;
+          transform: scale(1);
+          @media (max-width: 1200px) {
+            left: 75%;
+            transform: scale(0.8);
+          }
+          @media (max-width: 768px) {
+            left: 65%;
+            bottom: -50%;
+            transform: scale(0.8);
+          }
+        }
+        img {
+          width: 100%;
+          z-index: -1;
+          transform: scale(0.85);
+          @media (max-width: 1100px) {
+            transform: scale(0.75);
+          }
+        }
+      }
+    }
+
+    @mixin blobStyle($top, $left, $blob-img) {
+      background-image: $blob-img;
+      background-repeat: no-repeat;
+      position: absolute;
+      height: 400px;
+      width: 400px;
+      opacity: 0.3;
+      z-index: -1;
+      content: " ";
+      top: $top;
+      left: $left;
+      @media (max-width: $screen-rest) {
+        transform: scale(0.75);
+      }
+      @media (max-width: $screen-tablet) {
+        transform: scale(0.6);
+      }
+    }
+    //offer section
+    .offer-section {
+      @media (max-width: 1100px) {
+        margin-top: 5rem;
+      }
+      .offer-container {
+        .offer-section__header-tag {
           color: $accent-color;
           font-weight: bolder;
+        }
+        .offer-section__heading {
+          font-size: $big-font;
           position: relative;
+          padding-bottom: 1rem;
           &::before {
-            @include blobStyle(-150px, -100px, url(./image/blob2.svg));
-            @media (max-width: $screen-tablet) {
-              left: -150px;
-            }
-          }
-        }
-        .contact__social-media-bar {
-          @include displayFlex(row, space-around);
-          width: 30%;
-          padding: 2rem 0;
-          i {
-            transform: scale(2);
-            color: $secondary-color;
-            transition: 0.3s all;
-            &:hover {
-              color: $accent-color;
-            }
+            @include blobStyle(-200px, -100px, url("./image/blob1.svg"));
           }
         }
       }
-      @mixin inputStyling() {
-        padding: 0.5rem;
-        font-family: "Open Sans", sans-serif;
-      }
-      .contant-form {
-        background-color: $secondary-color;
-        padding: 2rem;
-        width: 40%;
-        box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
+      .offer-container__grid-container {
+        margin-top: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 3rem;
         @media (max-width: $screen-tablet) {
-          width: 70%;
-          margin: 0 auto;
+          grid-template-columns: 1fr;
         }
-        form {
-          @include displayFlex(column, flex-start);
-          .contact-form__heading {
-            text-align: center;
+        .offer-container__grid-item {
+          text-align: center;
+          .offer-container__grid-item-heading {
+            color: $accent-color;
           }
-          label {
-            padding: 0.3rem 0;
+          .grid-item-svg {
+            max-width: 60px;
+            color: $accent-color;
           }
-          input {
-            @include inputStyling();
+        }
+      }
+    }
+    //My projects section with slider
+    .my-projects {
+      margin: 3rem 0;
+      @media (max-width: $screen-tablet) {
+        margin: 1rem 0;
+      }
+      .my-projects__slider {
+        margin: 0 auto;
+        width: 80%;
+
+        &:hover .elem-description {
+          opacity: 1;
+        }
+        @media (max-width: $screen-tablet) {
+          width: 90%;
+          font-size: 10px;
+        }
+        .my-projects__slider-elem img {
+          position: relative;
+          width: 100%;
+        }
+        .elem-description {
+          padding: 1rem 3rem;
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0.5);
+          width: 100%;
+          bottom: 3px;
+          opacity: 0;
+          color: white;
+          transition: 0.3s all;
+          @media (max-width: $screen-tablet) {
+            height: 100%;
+            padding: 1rem 2rem;
           }
-          textarea {
-            resize: none;
-            @include inputStyling();
+          article {
+            width: 10%;
+            @media (max-width: $screen-tablet) {
+              margin: 1rem 0;
+              position: absolute;
+              bottom: 0;
+            }
           }
-          .contact-form__submit-msg-btn {
-            border: none;
-            margin-top: 0.8rem;
-            padding: 0.8rem;
-            background-color: $accent-color;
-            color: $font-color;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s all;
+          i {
+            color: white;
+            font-size: $big-font;
+            padding-right: 0.5rem;
             &:hover {
-              filter: brightness(1.25);
+              color: lightgray;
+            }
+            @media (max-width: $screen-tablet) {
+              font-size: $regular-font;
+            }
+          }
+        }
+      }
+      .my-projects__header-tag {
+        color: $accent-color;
+        font-weight: bolder;
+        position: relative;
+        &::before {
+          @include blobStyle(-130px, -160px, url(./image/blob4.svg));
+        }
+      }
+      .my-projects__heading {
+        margin-bottom: 5rem;
+      }
+    }
+    //about me section
+    .about-me {
+      .about-me__header-tag {
+        color: $accent-color;
+        font-weight: bolder;
+        text-align: right;
+        position: relative;
+        @media (max-width: $screen-tablet) {
+          width: 20%;
+          margin-left: 80%;
+        }
+        &::before {
+          @include blobStyle(-150px, 0px, url("./image/blob.svg"));
+          @media (max-width: $screen-tablet) {
+            left: -150px;
+          }
+        }
+      }
+      .about-me__heading {
+        text-align: right;
+        margin-bottom: 2rem;
+        width: 100%;
+      }
+      .about-me__container {
+        @include displayFlex(row, space-between);
+        margin-right: 5rem;
+        @media (max-width: $screen-tablet) {
+          margin: 1rem;
+        }
+        @media (max-width: $screen-tablet) {
+          flex-direction: column-reverse;
+          text-align: center;
+        }
+        .about-me__header-img {
+          order: 2;
+          .about-me__img img {
+            box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
+            border: 1px solid black;
+            filter: saturate(200%);
+            width: 100%;
+            border-radius: 15px;
+            @media (max-width: $screen-rest) {
+              width: 100%;
+            }
+            @media (max-width: $screen-tablet) {
+              width: 50%;
+              border-radius: 50%;
+            }
+          }
+        }
+        .about-me__text-techs {
+          width: 60%;
+          padding-top: 4rem;
+          @media (max-width: $screen-tablet) {
+            width: 100%;
+            padding-top: 1rem;
+          }
+          p {
+            padding: 0.5rem 0;
+          }
+          .tech-container {
+            .tech-container__heading {
+              color: $accent-color;
+              font-weight: bold;
+            }
+            .tech-icons-container {
+              margin-top: 2rem;
+              @include displayFlex(row, flex-start);
+              @media (max-width: $screen-tablet) {
+                justify-content: center;
+              }
+              img {
+                padding: 0.4rem;
+                width: 64px;
+
+                @media (max-width: $screen-rest) {
+                  width: 48px;
+                }
+                @media (max-width: $screen-tablet) {
+                  width: 32px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    //contact section
+    .contact {
+      margin: 3rem 0;
+      @media (max-width: $screen-tablet) {
+        margin: 1rem 0;
+      }
+      .contact-container {
+        @include displayFlex(row, space-between);
+        @media (max-width: $screen-tablet) {
+          flex-direction: column;
+        }
+        .contact__text {
+          width: 40%;
+          @media (max-width: $screen-tablet) {
+            width: 100%;
+          }
+          .contact__header-tag {
+            color: $accent-color;
+            font-weight: bolder;
+            position: relative;
+            &::before {
+              @include blobStyle(-150px, -100px, url(./image/blob2.svg));
+              @media (max-width: $screen-tablet) {
+                left: -150px;
+              }
+            }
+          }
+          .contact__social-media-bar {
+            @include displayFlex(row, space-around);
+            width: 30%;
+            padding: 2rem 0;
+            i {
+              transform: scale(2);
+              color: $secondary-color;
+              transition: 0.3s all;
+              &:hover {
+                color: $accent-color;
+              }
+            }
+          }
+        }
+        @mixin inputStyling() {
+          padding: 0.5rem;
+          font-family: "Open Sans", sans-serif;
+        }
+        .contant-form {
+          background-color: $secondary-color;
+          padding: 2rem;
+          width: 40%;
+          box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
+          @media (max-width: $screen-tablet) {
+            width: 70%;
+            margin: 0 auto;
+          }
+          form {
+            @include displayFlex(column, flex-start);
+            .contact-form__heading {
+              text-align: center;
+            }
+            label {
+              padding: 0.3rem 0;
+            }
+            input {
+              @include inputStyling();
+            }
+            textarea {
+              resize: none;
+              @include inputStyling();
+            }
+            .contact-form__submit-msg-btn {
+              border: none;
+              margin-top: 0.8rem;
+              padding: 0.8rem;
+              background-color: $accent-color;
+              color: $font-color;
+              font-weight: bold;
+              cursor: pointer;
+              transition: 0.3s all;
+              &:hover {
+                filter: brightness(1.25);
+              }
             }
           }
         }
