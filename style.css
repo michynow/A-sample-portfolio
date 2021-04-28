@@ -293,12 +293,7 @@ body .nav-menu__container .nav-menu__hamburger-container .nav-menu__hamburger .h
 body .content-container {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  body .content-container {
-    margin: 0 1rem;
-  }
+  padding: 0 1rem;
 }
 
 body .content-container .intro-section__container {
@@ -384,7 +379,7 @@ body .content-container .intro-section__container .intro-section__welcome-text .
 body .content-container .intro-section__container .intro-section__btn {
   border: 1px solid #083d77;
   z-index: 10;
-  border-radius: 15px;
+  border-radius: 2px;
   padding: 0.8rem;
   background-color: #083d77;
   font-weight: bold;
@@ -674,7 +669,7 @@ body .content-container .about-me .about-me__header-tag::before {
   z-index: -1;
   content: " ";
   top: -150px;
-  left: 0px;
+  left: 120px;
 }
 
 @media (max-width: 1366px) {
@@ -714,7 +709,6 @@ body .content-container .about-me .about-me__container {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-right: 5rem;
 }
 
 @media (max-width: 768px) {
@@ -737,14 +731,15 @@ body .content-container .about-me .about-me__container .about-me__header-img {
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
           order: 2;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 45%;
+          flex: 0 0 45%;
 }
 
 body .content-container .about-me .about-me__container .about-me__header-img .about-me__img img {
   -webkit-box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
           box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.5);
   border: 1px solid black;
-  -webkit-filter: saturate(200%);
-          filter: saturate(200%);
   width: 100%;
   border-radius: 15px;
 }
@@ -763,7 +758,9 @@ body .content-container .about-me .about-me__container .about-me__header-img .ab
 }
 
 body .content-container .about-me .about-me__container .about-me__text-techs {
-  width: 60%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 45%;
+          flex: 0 0 45%;
   padding-top: 4rem;
 }
 
@@ -785,6 +782,11 @@ body .content-container .about-me .about-me__container .about-me__text-techs .te
 
 body .content-container .about-me .about-me__container .about-me__text-techs .tech-container .tech-icons-container {
   margin-top: 2rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1021,4 +1023,3 @@ body .main-footer span {
   color: red;
   font-weight: bolder;
 }
-/*# sourceMappingURL=style.css.map */
